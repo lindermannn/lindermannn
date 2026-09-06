@@ -2,29 +2,53 @@
 
 I build AI systems that run in production and carry their own measurements: retrieval pipelines with evaluation harnesses, multi-tenant LLM infrastructure, and computer vision on edge hardware.
 
-Based in Chile. Currently building [NUMEN AI](https://numen-ai.cl).
+**Python · PostgreSQL/pgvector · TypeScript · Docker · LLMOps** — Ovalle, Chile.
+Open to remote roles; hybrid or on-site for the right offer.
+
+📧 dimitrydonaire@gmail.com · [LinkedIn](https://linkedin.com/in/dimitry-donaire-6828aa400)
+
+> **NUMEN AI is my own product, in operation.** I'm looking for a full-time engineering role where I can apply what I learned building and running it.
+
+---
+
+### How I work
+
+Systems get instrumented before they get optimised. Most of what I've written publicly is about measurement going wrong — a hybrid search that silently regressed to pure vector similarity, a cleanup with zero effect on the golden set and 100%→0% effect in production, an evaluation judge that fabricated a convincing finding by reading truncated input.
+
+**That last one I retracted.** The judge was truncating its own input, penalising exactly the long answers that vague questions produce. I measured the judge's own noise floor (~9 pts) by repeat-judging identical inputs, then used it to withdraw a finding I had already published. Negative results are documented alongside the wins.
+
+Before AI I spent **8+ years in safety-critical industrial environments** — mining, power generation, industrial construction (2016–2025). That's where the reflex comes from: circuit breakers, dead-letter queues, spend caps and auto-resume aren't patterns I read about, they're the shape of how you work when a failure is expensive and nobody is coming to help.
 
 ---
 
 ### What I'm working on
 
 **[NUMEN AI](https://numen-ai.cl)** — multi-tenant conversational AI platform, in production
-Six channels (WhatsApp, Telegram, Instagram, Messenger, email, web), hybrid RAG, per-tenant spend caps, PostgreSQL RLS, and a human-in-the-loop dashboard for live operator takeover. Cut idle executions by 90% (9,330 → 936/month) without losing capability.
+[Architecture docs →](https://github.com/lindermannn/numen-platform)
+
+Five live channels (WhatsApp including voice notes, Telegram, Instagram DM, Messenger, web chat) over ~70 modular n8n workflows. Hybrid RAG per tenant, PostgreSQL RLS, JWT-derived tenancy, per-tenant spend caps that cut before the bill surprises anyone, and a real-time dashboard for live operator takeover at zero token cost.
+
+`Cut idle executions by 90% — 9,330 → 936/month, with no loss of capability.`
 
 **[huberman-rag-eval](https://github.com/lindermannn/huberman-rag-eval)** — production RAG with a measured evaluation harness
-27,254 chunks from ~417 podcast episodes. Recall@8 78.1% · groundedness 93.2% · judge noise floor ~9 pts. The harness caught its own measurement bias and forced an earlier finding to be retracted — that write-up is the most useful thing in the repo.
+[Live demo →](https://production-hybrid-rag.lovable.app)
 
-**[gym-hype-video-pipeline](https://github.com/lindermannn/gym-hype-video-pipeline)** — agentic multimodal video processing
-MediaPipe pose → LangGraph planning → deterministic FFmpeg render, 568 tests, effects verified against real frames. Design rule that came out of it: a signal component is dropped when its landmarks aren't visible, rather than tuning a threshold per exercise.
+27,254 chunks from ~417 podcast episodes. Hybrid retrieval (pgvector + Postgres full-text, fused with RRF), LLM query rewriting, LLM rerank.
 
-**Edge AI surveillance** *(private, in progress)* — YOLO → RKNN on an RK3576 NPU, ByteTrack, Go2RTC/WebRTC, Supabase backend. Targets: <200 ms glass-to-glass, 4 concurrent streams at 15+ FPS.
+| Recall@8 | MRR | Context relevance | Groundedness | Judge noise floor |
+|---|---|---|---|---|
+| 78.1% | 0.593 | 83.8% | 93.2% | ~9 pts |
+
+The metric code is covered by tests that run in CI — including one that pins the exclusion rule behind the recall denominator, so the number can't quietly change meaning.
+
+**[edge-ai-surveillance](https://github.com/lindermannn/edge-ai-surveillance)** — embedded computer vision for public tenders
+*Architecture public, implementation private.*
+
+**Current:** validated multi-camera prototype on x86/Windows against live RTSP streams — Go2RTC, OpenCV, tenant-isolated Supabase backend, 317 tests, CI.
+**Target:** RK3576/NPU appliance using YOLO compiled to RKNN, ByteTrack, <200 ms glass-to-glass, 4 concurrent streams at 15+ FPS.
+
+Events cross the network; video does not.
 
 ---
 
-### How I work
-
-Systems get instrumented before they get optimised. Most of what I've written publicly is about measurement going wrong — a hybrid search that silently regressed to pure vector similarity, a cleanup with zero effect on the golden set and 100%→0% effect in production, an evaluation judge that fabricated a convincing finding by reading truncated input. Negative results are documented alongside the wins.
-
----
-
-`Python` · `JavaScript / Node` · `TypeScript` · `PostgreSQL / pgvector` · `Supabase` · `n8n` · `Next.js` · `Docker` · `OpenAI API` · `LangGraph` · `MediaPipe` · `YOLO / RKNN` · `FFmpeg`
+`Python` · `TypeScript` · `JavaScript / Node` · `PostgreSQL / pgvector` · `Supabase` · `Docker` · `FastAPI` · `Next.js` · `LangGraph` · `OpenAI API` · `MediaPipe` · `YOLO / RKNN` · `FFmpeg` · `n8n`
