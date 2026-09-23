@@ -1,45 +1,23 @@
 ## Dimitry Donaire — Applied AI Engineer
 
-I build AI systems that run in production and carry their own measurements: retrieval pipelines with evaluation harnesses, multi-tenant LLM infrastructure, and computer vision on edge hardware.
+I build and operate AI systems: a multi-tenant conversational platform, a production RAG pipeline with a measured evaluation harness, and computer vision running on edge hardware. My work covers deployment, measurement, failure recovery and cost control.
 
-**Python · PostgreSQL/pgvector · TypeScript · Docker · LLMOps** — Ovalle, Chile.
-Open to remote roles; hybrid or on-site for the right offer.
+**Ovalle, Chile · Open to remote roles** · [Email](mailto:dimitrydonaire@gmail.com) · [LinkedIn](https://linkedin.com/in/dimitry-donaire-6828aa400)
 
-📧 dimitrydonaire@gmail.com · [LinkedIn](https://linkedin.com/in/dimitry-donaire-6828aa400)
+### Selected work
 
----
+**[NUMEN AI](https://github.com/lindermannn/numen-platform)** · [Product](https://numen-ai.cl) — multi-tenant conversational AI platform in production. WhatsApp, Telegram and Web Chat are live; Instagram DM and Messenger are connected and awaiting Meta App Review for public rollout. Tenant isolation, RAG, spend caps and operator takeover are documented in the public architecture. In a pre-commercial configuration, idle executions fell by about 90%: ~9,330/month extrapolated from three measured days to ~936/month expected from the revised schedules. [Method and limits](https://github.com/lindermannn/numen-platform/blob/master/docs/finops.md).
+
+**[Huberman RAG](https://github.com/lindermannn/huberman-rag-eval)** · [Live demo](https://production-hybrid-rag.lovable.app) — production retrieval over 27,254 chunks from roughly 417 podcast episodes. Hybrid search, query rewriting and reranking are evaluated on a 42-question set: **Recall@8 78.1%**, **MRR 0.593**. The repository includes the harness, CI tests and an account of a finding withdrawn after discovering that the evaluation judge truncated its own input. [Evaluation and limitations](https://github.com/lindermannn/huberman-rag-eval/blob/main/docs/EVALUATION.md).
+
+**[Numen Vision](https://github.com/lindermannn/edge-ai-surveillance)** — edge video analytics that evolved from a multi-camera prototype for public tenders into a residential appliance. The private implementation now runs YOLOX-Nano through RKNN on an RK3576 NPU. A recorded **7.85-hour board run** processed four replayed 4 MP H.265 sources at **3.84 analysed fps per camera**; physical cameras and a 24-hour run remain untested. The public repository provides the architecture, measurement method and limits; implementation and deployment configuration remain private.
+
+**[BermGuard](https://github.com/lindermannn/bermguard-ai-vision-pipeline)** — a six-day technical exercise in mining vehicle and berm monitoring. The public repository documents segmentation, temporal tracking, geometry, validation decisions and limitations. The submitted implementation and source videos are private.
 
 ### Background
 
-8+ years in safety-critical industrial environments — mining, power generation, industrial construction (2016–2025) — before moving into AI. Circuit breakers, dead-letter queues, spend caps and auto-resume are not patterns I read about; they're how you build when failure is expensive and no one is coming to help.
+Before AI engineering, I spent over eight years in mining, power generation and industrial construction (2016–2025). That experience informs how I design for failure and document evidence. I also publish negative results: in Huberman RAG, I withdrew an evaluation finding after measuring bias in the judge rather than defending a favorable number.
 
-Most of what I publish is about measurement going wrong: a hybrid search that silently regressed to pure vector similarity, a cleanup with zero effect on the golden set and full effect in production, an evaluation judge that fabricated a finding by reading truncated input. That last one I retracted — I measured the judge's own noise floor (~9 pts) and used it to withdraw a result I had already published. Negative results are documented alongside the wins.
-
----
-
-### Projects
-
-**[NUMEN AI](https://numen-ai.cl)** — multi-tenant conversational AI platform, in production. [Architecture →](https://github.com/lindermannn/numen-platform)
-
-Five channels (WhatsApp including voice notes, Telegram, Instagram DM, Messenger, web chat) over ~70 modular n8n workflows. Hybrid RAG per tenant, PostgreSQL RLS, JWT-derived tenancy, per-tenant spend caps, real-time dashboard for operator takeover at zero token cost. Idle executions cut 90% — 9,330 → 936/month — with no loss of capability.
-
-**[huberman-rag-eval](https://github.com/lindermannn/huberman-rag-eval)** — production RAG with a measured evaluation harness. [Live demo →](https://production-hybrid-rag.lovable.app)
-
-27,254 chunks from ~417 podcast episodes. Hybrid retrieval (pgvector + Postgres full-text, fused with RRF), LLM query rewriting, LLM rerank.
-
-| Recall@8 | MRR | Context relevance | Groundedness | Judge noise floor |
-|---|---|---|---|---|
-| 78.1% | 0.593 | 83.8% | 93.2% | ~9 pts |
-
-Metric code is covered by CI tests, including one that pins the exclusion rule behind the recall denominator so the number can't quietly change meaning.
-
-**[edge-ai-surveillance](https://github.com/lindermannn/edge-ai-surveillance)** — embedded computer vision for public tenders. Architecture public, implementation private.
-
-**Validated:** multi-camera prototype on x86/Windows against live RTSP streams — Go2RTC, OpenCV, tenant-isolated Supabase backend, 317 tests, CI.
-**Targeted, not yet measured:** RK3576/NPU appliance, YOLO compiled to RKNN, ByteTrack, <200 ms glass-to-glass, 4 concurrent streams at 15+ FPS — the benchmark harness is built and gated in CI; the 24-hour validation campaign on-device hasn't run yet.
-
-Events cross the network; video does not.
-
----
-
-`Python` · `TypeScript` · `JavaScript / Node` · `PostgreSQL / pgvector` · `Supabase` · `Docker` · `FastAPI` · `Next.js` · `LangGraph` · `OpenAI API` · `MediaPipe` · `YOLO / RKNN` · `FFmpeg` · `n8n`
+- **Languages:** Python · TypeScript · JavaScript/Node · SQL
+- **Data and infrastructure:** PostgreSQL/pgvector · Supabase · Docker · n8n · Next.js
+- **AI and vision:** RAG evaluation · OpenAI API · YOLO/RKNN · OpenCV · MediaPipe · FFmpeg
